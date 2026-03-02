@@ -1,8 +1,10 @@
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import Header from "../components/Header";
 import "./TrakingPage.css";
 
 function TrackingPage({ cart }) {
+  const { orderId, productId } = useParams();
+  console.log(orderId, productId);
   return (
     <>
       <link rel="icon" type="image/svg+xml" href="/tracking-favicon.png" />

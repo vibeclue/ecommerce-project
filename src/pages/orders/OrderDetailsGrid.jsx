@@ -29,7 +29,6 @@ function OrderDetailsGrid({ order }) {
             </div>
 
             <div className="product-actions">
-              {console.log(order)}
               <Link to={`/tracking/${order.id}/${orderProduct.product.id}`}>
                 <button className="track-package-button button-secondary">
                   Track package
