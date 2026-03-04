@@ -13,7 +13,7 @@ function CartItemDetails({ cartItem }) {
         <div className="product-quantity">
           <span>
             Quantity:{" "}
-            <span className="quantity-label">{cartItem.product.quantity}</span>
+            <span className="quantity-label">{cartItem.quantity}</span>
           </span>
           <span className="update-quantity-link link-primary">Update</span>
           <span className="delete-quantity-link link-primary">Delete</span>
