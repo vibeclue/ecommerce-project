@@ -4,10 +4,37 @@ import { formatMoney } from "../../utils/money";
 
 function CartItemDetails({ cartItem, loadCart }) {
   const [isUpdatingQuantity, setIsUpdatingQuantity] = useState(false);
+  const [quantity, setQuatity] = useState(cartItem.quantity);
 
   const deleteCartItem = async () => {
     await axios.delete(`/api/cart-items/${cartItem.productId}`);
     await loadCart();
+  };
+
+  const updateQuantityInput = (event) => {
+    setQuatity(event.target.value);
+  };
+
+  const updateQuantity = async () => {
+    if (isUpdatingQuantity) {
+      await axios.put(`/api/cart-items/${cartItem.productId}`, {
+        quantity: Number(quantity),
+      });
+      await loadCart();
+      setIsUpdatingQuantity(false);
+    } else {
+      setIsUpdatingQuantity(true);
+    }
+  };
+
+  const handleQuantityKeyDown = (event) => {
+    if (event.key === "Enter") {
+      updateQuantity();
+    }
+    if (event.key === "Escape") {
+      setQuatity(cartItem.quantity);
+      setIsUpdatingQuantity(false);
+    }
   };
 
   return (
@@ -23,16 +50,20 @@ function CartItemDetails({ cartItem, loadCart }) {
           <span>
             Quantity:
             {isUpdatingQuantity ? (
-              <input type="text" className="quantity-textbox" />
+              <input
+                type="text"
+                className="quantity-textbox"
+                value={quantity}
+                onChange={updateQuantityInput}
+                onKeyDown={handleQuantityKeyDown}
+              />
             ) : (
               <span className="quantity-label">{cartItem.quantity}</span>
             )}
           </span>
           <span
             className="update-quantity-link link-primary"
-            onClick={() => {
-              setIsUpdatingQuantity(!isUpdatingQuantity);
-            }}
+            onClick={updateQuantity}
           >
             Update
           </span>
